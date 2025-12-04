@@ -13,17 +13,19 @@ import {
   Bot,
   Globe,
   LayoutGrid,
-  Code,
-  Mail,
-  List
+  Code
 } from 'lucide-react';
 
 const UniversalDNSHub = () => {
-  // CORRECTED: Using generic domain (yoursite.com) and non-functional hashed placeholders for privacy.
+  // Pre-loaded with the content from idarti.com.txt
   const initialZoneFile = `;;
-;; Domain:     yoursite.com.
+;; Domain:     www.idarti.com.
 ;; Exported:   2025-12-03 23:57:10
-;;
+;; Root Idea:  Came to me when some of my clients' emails kept bouncing wjen travelling from my domain to 
+;; Microsoft's server via my Cloudflare implementation. I decided I might make a multi-platform app so help save time.
+;; Creator:    Igor Dunaev, using Google's tools
+
+
 ;; SOA Record
 yoursite.com\t3600\tIN\tSOA\tclarissa.ns.cloudflare.com. dns.cloudflare.com. 2051647283 10000 2400 604800 3600
 
@@ -32,32 +34,32 @@ yoursite.com.\t86400\tIN\tNS\tclarissa.ns.cloudflare.com.
 yoursite.com.\t86400\tIN\tNS\tkobe.ns.cloudflare.com.
 
 ;; CNAME Records
-VERIFY_BING_HASHED.yoursite.com.\t1\tIN\tCNAME\tverify.bing.com.
+3cdab4e06bdef9c765e3bb35f61aebed.yoursite.com.\t1\tIN\tCNAME\tverify.bing.com.
 email.yoursite.com.\t1\tIN\tCNAME\temail.yoursite.com.cdn.cloudflare.net.
-hs1-EMAIL_DKIM_HASHED._domainkey.yoursite.com.\t1\tIN\tCNAME\tyoursite-com.hs07a.dkim.hubspotemail.net.
-hs2-EMAIL_DKIM_HASHED._domainkey.yoursite.com.\t1\tIN\tCNAME\tyoursite-com.hs07b.dkim.hubspotemail.net.
-hub.yoursite.com.\t1\tIN\tCNAME\tSITE_CDN_ID_HASHED.group0.sites.hscoscdn-eu1.net.
+hs1-146257293._domainkey.yoursite.com.\t1\tIN\tCNAME\tyoursite-com.hs07a.dkim.hubspotemail.net.
+hs2-146257293._domainkey.yoursite.com.\t1\tIN\tCNAME\tyoursite-com.hs07b.dkim.hubspotemail.net.
+hub.yoursite.com.\t1\tIN\tCNAME\t146257293.group0.sites.hscoscdn-eu1.net.
 yoursite.com.\t1\tIN\tCNAME\tyoursite.pages.dev.
 www.yoursite.com.\t1\tIN\tCNAME\tyoursite.pages.dev.
 
 ;; MX Records
-hub.yoursite.com.\t1\tIN\tMX\t55 route1.mx.cloudflare.net.
-hub.yoursite.com.\t1\tIN\tMX\t13 route3.mx.cloudflare.net.
-hub.yoursite.com.\t1\tIN\tMX\t52 route2.mx.cloudflare.net.
-yoursite.com.\t1\tIN\tMX\t52 route2.mx.cloudflare.net.
-yoursite.com.\t1\tIN\tMX\t55 route1.mx.cloudflare.net.
-yoursite.com.\t1\tIN\tMX\t13 route3.mx.cloudflare.net.
+hub.xxxxxx.com.\t1\tIN\tMX\t55 route1.mx.cloudflare.net.
+hub.xxxxxx.com.\t1\tIN\tMX\t13 route3.mx.cloudflare.net.
+hub.xxxxxx.com.\t1\tIN\tMX\t52 route2.mx.cloudflare.net.
+xxxxxx.com.\t1\tIN\tMX\t52 route2.mx.cloudflare.net.
+xxxxxx.com.\t1\tIN\tMX\t55 route1.mx.cloudflare.net.
+xxxxxx.com.\t1\tIN\tMX\t13 route3.mx.cloudflare.net.
 
 ;; TXT Records
-cf2024-1._domainkey.yoursite.com.\t1\tIN\tTXT\t"v=DKIM1; h=sha256; k=rsa; p=DKIM_PUBLIC_KEY_HASHED_PART1" "DKIM_PUBLIC_KEY_HASHED_PART2"
-yoursite.com.\t1\tIN\tTXT\t"google-site-verification=G_VERIFY_TOKEN_HASHED"
+cf2024-1._domainkey.yoursite.com.\t1\tIN\tTXT\t"v=DKIM1; h=sha256; k=rsa; p=" " "++jXh+dJ+p+F08i95l3+aV7+V+2UqXwIDAQAB"
+yoursite.com.\t1\tIN\tTXT\t"google-site-verification=..."
 yoursite.com.\t1\tIN\tTXT\t"v=spf1 include:_spf.mx.cloudflare.net ~all"
-yoursite.com.\t1\tIN\tTXT\t"include:HUBSPOT_SPF_TOKEN.spf07.hubspotemail.net"
-yoursite.com.\t1\tIN\tTXT\t"yandex-verification: YANDEX_VERIFY_HASHED"
-yoursite.com.\t1\tIN\tTXT\t"pinterest-site-verification=PINTEREST_VERIFY_HASHED"
-yoursite.com.\t1\tIN\tTXT\t"hubspot-developer-verification=HUBSPOT_DEV_VERIFY_HASHED"
-yoursite.com.\t1\tIN\tTXT\t"openai-domain-verification=OPENAI_VERIFY_HASHED"
-_dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMAIL_HASHED@yoursite.com"`;
+yoursite.com.\t1\tIN\tTXT\t"include:146257293.spf07.hubspotemail.net"
+yoursite.com.\t1\tIN\tTXT\t"yandex-verification: 784e96ff9b0fbe9a"
+yoursite.com.\t1\tIN\tTXT\t"pinterest-site-verification=..."
+yoursite.com.\t1\tIN\tTXT\t"hubspot-developer-verification=..."
+yoursite.com.\t1\tIN\tTXT\t"openai-domain-verification=..."
+_dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:..."`;
 
   const [inputZone, setInputZone] = useState(initialZoneFile);
   const [outputContent, setOutputContent] = useState('');
@@ -77,7 +79,6 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
   const [isAiCommandLoading, setIsAiCommandLoading] = useState(false);
 
   const apiKey = ""; 
-  const domainName = 'yoursite.com';
 
   // --- Gemini API ---
   const callGemini = async (prompt) => {
@@ -110,13 +111,12 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     const platformName = platform === 'cf' ? "Cloudflare" : platform === 'gcp' ? "Google Cloud DNS" : "Generic BIND";
     
     const prompt = `
-      Act as a Cloud Security Architect specialized in ${platformName}. Analyze the following DNS Zone file.
-      The domain being analyzed is ${domainName}.
+      Act as a Cloud Security Architect specialized in ${platformName}.
+      Analyze the following DNS Zone file.
       
-      Focus on:
-      1. **Email Security:** DMARC policy strength (flag p=none), SPF consolidation, DKIM presence.
-      2. **TLS/SSL Security:** Missing or weak CAA records (Certificate Authority Authorization).
-      3. **Infrastructure Hygiene:** Old verification records, CNAME best practices for ${platformName}.
+      Specific Context for ${platformName}:
+      ${platform === 'cf' ? "- Check for opportunities to proxy traffic (orange cloud).\n- Suggest Cloudflare specific security headers." : ""}
+      ${platform === 'gcp' ? "- Ensure strict RFC 1035 compliance.\n- Suggest Google Cloud Armor or Load Balancing if relevant." : ""}
       
       Zone File:
       ${inputZone}
@@ -124,9 +124,9 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
       Output JSON format:
       {
         "riskLevel": "High" | "Medium" | "Low",
-        "summary": "Short executive summary focusing on ${platformName} email, TLS, and infrastructure optimization.",
+        "summary": "Short executive summary focusing on ${platformName} optimization.",
         "findings": [
-          { "type": "Security" | "Optimization" | "Email", "message": "Finding description" }
+          { "type": "Security" | "Optimization", "message": "Finding description" }
         ]
       }
     `;
@@ -139,7 +139,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     } catch (e) {
       setAiAnalysis({
         riskLevel: "Unknown",
-        summary: "Could not parse AI response or network error.",
+        summary: "Could not parse AI response.",
         findings: [{ type: "Error", message: "Raw output: " + e.message }]
       });
     }
@@ -152,11 +152,13 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     const platformName = platform === 'cf' ? "Cloudflare" : "Google Cloud";
 
     const prompt = `
-      You are a DNS Automation Engineer for ${platformName}. The output format requested is ${exportFormat === 'terraform' ? 'Terraform HCL' : 'BIND format'}.
+      You are a DNS Automation Engineer for ${platformName}.
       User Request: "${aiCommand}"
       
-      Generate the correct record configuration. 
-      The domain is ${domainName}.
+      Generate the correct record configuration.
+      If Terraform format is requested, output Terraform HCL.
+      If BIND is requested, output BIND.
+      Default to BIND if unspecified.
       Output ONLY the code.
     `;
 
@@ -176,16 +178,23 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
       if (!cleanLine || cleanLine.startsWith(';')) return;
       const parts = cleanLine.split(/\s+/);
       let name = parts[0];
+      // Basic heuristic for BIND format
+      // Checks for IN class position
       let ttl = '3600';
       let type = 'A';
       let data = '';
       
+      // Very naive parser for demo purposes - assumes standard columns or specific variations
+      if (parts[1] && parseInt(parts[1])) { ttl = parts[1]; }
+      
+      // Find type index (IN is usually before type)
       let typeIndex = parts.indexOf('IN');
       if (typeIndex !== -1) {
          type = parts[typeIndex + 1];
          data = parts.slice(typeIndex + 2).join(' ');
          if(typeIndex > 1 && parseInt(parts[1])) ttl = parts[1];
       } else {
+         // Fallback if IN is missing
          type = parts[3];
          data = parts.slice(4).join(' ');
       }
@@ -196,25 +205,29 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
   };
 
   const generateTerraform = (records, plat) => {
-    let tfOutput = `# Terraform Config for ${plat === 'gcp' ? 'Google Cloud DNS' : 'Cloudflare'}\n# Domain: ${domainName}\n\n`;
+    let tfOutput = `# Terraform Config for ${plat === 'gcp' ? 'Google Cloud DNS' : 'Cloudflare'}\n\n`;
+    
+    // Group records by name+type for GCP (ResourceRecordSets)
+    // Cloudflare uses individual records usually, but grouping is fine too
     
     if (plat === 'gcp') {
         tfOutput += `resource "google_dns_managed_zone" "default" {
-  name        = "${domainName.replace(/\./g, '-')}-zone"
-  dns_name    = "${domainName}."
-  description = "Managed by LEGION2"
+  name        = "yoursite-zone"
+  dns_name    = "yoursite.com."
+  description = "Managed by Legion2 SecOps"
 }\n\n`;
 
         const grouped = {};
         records.forEach(r => {
              const key = `${r.name}-${r.type}`;
              if (!grouped[key]) grouped[key] = { ...r, rrdatas: [] };
+             // Strip quotes for TF strings if needed, or keep them
              grouped[key].rrdatas.push(r.data);
         });
 
         Object.values(grouped).forEach(g => {
-            if (g.type === 'SOA' || g.type === 'NS') return; 
-            tfOutput += `resource "google_dns_record_set" "${g.name.replace(/\./g, '_').replace(/@/g, 'apex')}_${g.type}" {
+            if (g.type === 'SOA') return; // Managed automatically often
+            tfOutput += `resource "google_dns_record_set" "${g.name.replace(/\./g, '_')}_${g.type}" {
   name = "${g.name}"
   type = "${g.type}"
   ttl  = ${g.ttl}
@@ -225,18 +238,18 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     } else {
         // Cloudflare
         records.forEach(r => {
-            if (r.type === 'SOA' || r.type === 'NS') return;
+            if (r.type === 'SOA') return;
             const proxied = r.ttl === '1' ? 'true' : 'false';
-            const safeName = r.name.replace(/\.$/, '').replace(domainName, '@'); 
+            const safeName = r.name.replace(/\.$/, ''); // CF often prefers no trailing dot in TF
             const safeData = r.data.replace(/"/g, '\\"');
             
-            tfOutput += `resource "cloudflare_record" "${r.name.replace(/\./g, '_').replace(/@/g, 'apex')}_${r.type}_${Math.random().toString(36).substr(2,5)}" {
+            tfOutput += `resource "cloudflare_record" "${r.name.replace(/\./g, '_')}_${r.type}_${Math.random().toString(36).substr(2,5)}" {
   zone_id = var.cloudflare_zone_id
   name    = "${safeName}"
   value   = "${safeData}"
   type    = "${r.type}"
   ttl     = ${r.ttl === '1' ? 1 : r.ttl}
-  proxied = ${r.type === 'A' || r.type === 'CNAME' ? proxied : 'false'}
+  proxied = ${proxied}
 }\n`;
         });
     }
@@ -249,74 +262,59 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     let criticals = 0;
     let warns = 0;
 
-    // --- Record Catalog Analysis & Fixes ---
-
-    // 1. DMARC Policy Check (Email Security)
-    const dmarcRecord = records.find(r => r.name.includes('_dmarc') && r.type === 'TXT');
-    if (dmarcRecord && dmarcRecord.data.includes('p=none')) {
-        warns++;
-        newLogs.push({ type: 'warning', msg: `[Email] DMARC policy 'p=none' detected. Recommend 'p=quarantine' or 'p=reject' for enforcement.` });
-    } else if (!dmarcRecord) {
-         warns++;
-         newLogs.push({ type: 'warning', msg: `[Email] No DMARC record found. Critical security gap for email spoofing protection.` });
-    }
-
-    // 2. CAA Check (TLS/SSL Security)
-    const caaRecords = records.filter(r => r.type === 'CAA');
-    if (caaRecords.length === 0) {
-        warns++;
-        newLogs.push({ type: 'warning', msg: `[TLS] No CAA records found. Best practice: restrict Certificate Authorities to prevent unauthorized issuance.` });
-    }
-
-    // 3. SPF Consolidation (Email Security)
+    // SPF Logic (Common to both)
     const spfRecords = records.filter(r => 
-      r.type === 'TXT' && (r.name.includes(domainName)) && (r.data.includes('v=spf1') || r.data.includes('include:'))
+      r.type === 'TXT' && (r.name.includes('yoursite.com')) && (r.data.includes('v=spf1') || r.data.includes('include:'))
     );
 
     let mergedSPF = '';
     if (spfRecords.length > 1) {
       criticals++;
-      newLogs.push({ type: 'critical', msg: `[Email] Fragmented SPF detected. This may cause perm-error (10+ lookups).` });
-      mergedSPF = `"v=spf1 include:_spf.mx.cloudflare.net include:HUBSPOT_SPF_TOKEN.spf07.hubspotemail.net ~all"`;
+      newLogs.push({ type: 'critical', msg: `[Universal] Fragmented SPF records detected. Merging required.` });
+      // ... merging logic (simplified) ...
+      mergedSPF = `"v=spf1 include:_spf.mx.cloudflare.net include:146257293.spf07.hubspotemail.net ~all"`;
     }
 
-    // 4. Apex CNAME & TTL (Infrastructure Hygiene)
+    // Platform Specific Logic
     const processedRecords = records.map(rec => {
         let r = { ...rec };
         
-        if (r.type === 'CNAME' && (r.name.includes(domainName) && !r.name.replace(domainName, ''))) {
+        // 1. Apex CNAME Handling
+        if (r.type === 'CNAME' && (r.name === 'yoursite.com.' || r.name === 'yoursite.com')) {
             if (platform === 'gcp') {
                 warns++;
+                newLogs.push({ type: 'warning', msg: `[GCP-Strict] Apex CNAME is invalid. Converting to A-Record placeholder.` });
                 r.type = 'A';
-                r.data = '104.18.2.3'; // Placeholder IP (similar to Cloudflare's public IPs)
-                newLogs.push({ type: 'warning', msg: `[GCP-Strict] Apex CNAME violation. Flattened to A-Record.` });
+                r.data = '104.18.2.3'; // Placeholder
             } else {
-                 newLogs.push({ type: 'info', msg: `[Cloudflare] Apex CNAME (Flattening) detected - acceptable.` });
+                 newLogs.push({ type: 'info', msg: `[Cloudflare] Apex CNAME detected. Allowed via CNAME Flattening.` });
             }
         }
 
+        // 2. TTL Handling
         if (r.ttl === '1') {
             if (platform === 'gcp' || platform === 'bind') {
                 warns++;
                 r.ttl = '300';
-                newLogs.push({ type: 'warning', msg: `[${platform.toUpperCase()}] TTL '1' normalized to 300s (5 minutes).` });
+                newLogs.push({ type: 'warning', msg: `[${platform.toUpperCase()}] TTL '1' is invalid. Normalized to 300s.` });
+            } else {
+                // Cloudflare keeps 1 for auto
             }
         }
-        
-        // Apply SPF fix
+
+        // 3. SPF Replace
         if (mergedSPF && r.type === 'TXT' && (r.data.includes('v=spf1') || r.data.includes('include:'))) {
              r.data = mergedSPF;
+             // Mark as done handled in loop typically, simplified here
         }
 
         return r;
     });
 
+    // Remove duplicates for display
     const uniqueRecords = [];
     const seen = new Set();
     processedRecords.forEach(r => {
-        // Exclude the redundant/original SPF parts once mergedSPF is applied
-        if (mergedSPF && r.type === 'TXT' && (r.data.includes('v=spf1') || r.data.includes('include:')) && r.data !== mergedSPF) return;
-        
         const key = `${r.name}-${r.type}-${r.data}`;
         if(seen.has(key)) return;
         seen.add(key);
@@ -331,10 +329,9 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
         finalOutput = generateTerraform(uniqueRecords, platform);
     } else {
         // BIND Generator
-        finalOutput = `;; OPTIMIZED FOR: ${platform.toUpperCase()}\n;; DOMAIN: ${domainName}\n;; DATE: ${new Date().toISOString()}\n\n`;
+        finalOutput = `;; OPTIMIZED FOR: ${platform.toUpperCase()}\n;; DATE: ${new Date().toISOString()}\n\n`;
         uniqueRecords.forEach(r => {
-            const name = r.name.endsWith('.') ? r.name : `${r.name}.`;
-            finalOutput += `${name}\t${r.ttl}\tIN\t${r.type}\t${r.data}\n`;
+            finalOutput += `${r.name}\t${r.ttl}\tIN\t${r.type}\t${r.data}\n`;
         });
     }
 
@@ -347,11 +344,10 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
     });
   };
 
-  // --- UI Component ---
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans p-4 md:p-6 flex flex-col gap-6">
       
+      {/* Top Navigation Bar */}
       <header className="flex flex-col md:flex-row justify-between items-center gap-4 border-b border-slate-800 pb-6">
         <div className="flex items-center gap-3">
             <div className="p-2.5 bg-indigo-500/10 rounded-xl border border-indigo-500/30">
@@ -359,7 +355,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
             </div>
             <div>
                 <h1 className="text-xl font-bold text-white tracking-tight">Universal DNS Hub</h1>
-                <p className="text-xs text-slate-500 font-mono">Multi-Protocol, Multi-Cloud Infrastructure Security</p>
+                <p className="text-xs text-slate-500 font-mono">Multi-Cloud Infrastructure Normalizer</p>
             </div>
         </div>
 
@@ -381,7 +377,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                 onClick={() => setPlatform('bind')}
                 className={`px-4 py-2 rounded-md text-xs font-bold transition-all flex items-center gap-2 ${platform === 'bind' ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
             >
-                <Database className="w-3 h-3" /> Generic BIND
+                <Database className="w-3 h-3" /> Generic
             </button>
         </div>
       </header>
@@ -400,23 +396,23 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                     type="text" 
                     value={aiCommand}
                     onChange={(e) => setAiCommand(e.target.value)}
-                    placeholder={`Ask AI to generate MX, DKIM, CAA, or SRV records for ${domainName}...`}
+                    placeholder={`Ask AI to generate records for ${platform === 'cf' ? 'Cloudflare' : 'Google Cloud'}...`}
                     className="bg-transparent border-none focus:outline-none text-xs w-full py-2.5 text-white placeholder-slate-600 font-mono"
                     onKeyDown={(e) => e.key === 'Enter' && runAICommand()}
                 />
                 <button 
                     onClick={runAICommand}
                     disabled={isAiCommandLoading}
-                    className="mr-1 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold uppercase rounded tracking-wider transition-colors disabled:opacity-50"
+                    className="mr-1 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold uppercase rounded tracking-wider transition-colors"
                 >
-                    {isAiCommandLoading ? 'Gen...' : 'Generate'}
+                    {isAiCommandLoading ? 'Thinking...' : 'Generate'}
                 </button>
             </div>
             {aiCommandResult && (
                 <div className="bg-black/40 border border-indigo-500/30 rounded-lg p-3 relative group animate-slideIn">
                     <pre className="text-[10px] text-indigo-300 font-mono overflow-x-auto">{aiCommandResult}</pre>
                     <button 
-                        onClick={() => { setInputZone(prev => prev + '\n\n' + aiCommandResult); setAiCommandResult(''); setAiCommand(''); }}
+                        onClick={() => { setInputZone(prev => prev + '\n\n' + aiCommandResult); setAiCommandResult(''); }}
                         className="absolute top-2 right-2 text-[10px] bg-indigo-900/50 text-indigo-200 px-2 py-1 rounded hover:bg-indigo-800"
                     >
                         Insert
@@ -427,8 +423,8 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
             {/* Main Input Area */}
             <div className="flex-1 flex flex-col bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-xl">
                 <div className="bg-slate-950 px-4 py-3 border-b border-slate-800 flex justify-between items-center">
-                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2"><List className='w-3 h-3 text-slate-500'/> Artifact Input ({domainName})</span>
-                    <span className="text-[10px] text-slate-600 font-mono">BIND/TXT Format</span>
+                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Source Artifact (BIND/Txt)</span>
+                    <span className="text-[10px] text-slate-600 font-mono">yoursite.COM</span>
                 </div>
                 <textarea 
                     value={inputZone}
@@ -445,7 +441,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
             {/* Risk Card */}
             <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
                  <div className="flex justify-between items-center mb-2">
-                     <span className="text-[10px] font-bold text-slate-500 uppercase">Policy Compliance</span>
+                     <span className="text-[10px] font-bold text-slate-500 uppercase">Platform Compliance</span>
                      <Shield className={`w-4 h-4 ${stats.riskScore > 50 ? 'text-red-500' : 'text-green-500'}`} />
                  </div>
                  <div className="text-2xl font-bold text-white mb-1">
@@ -459,11 +455,11 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                  </div>
                  <div className="mt-3 flex gap-2">
                      <div className="flex-1 bg-slate-950 rounded p-2 text-center border border-slate-800">
-                         <div className="text-xs text-slate-500">Critical</div>
+                         <div className="text-xs text-slate-500">Errors</div>
                          <div className="text-sm font-bold text-red-400">{stats.criticalErrors}</div>
                      </div>
                      <div className="flex-1 bg-slate-900 rounded p-2 text-center border border-slate-800">
-                         <div className="text-xs text-slate-500">Warnings</div>
+                         <div className="text-xs text-slate-500">Warns</div>
                          <div className="text-sm font-bold text-orange-400">{stats.warnings}</div>
                      </div>
                  </div>
@@ -474,16 +470,16 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                 onClick={processZone}
                 className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-lg font-bold text-sm shadow-lg shadow-cyan-900/20 transition-all flex items-center justify-center gap-2"
             >
-                <RefreshCw className="w-4 h-4" /> Translate & Hardening
+                <RefreshCw className="w-4 h-4" /> Translate & Fix
             </button>
 
             <button 
                 onClick={runAIDeepScan}
                 disabled={isAiLoading}
-                className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/20 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="w-full py-3 bg-slate-800 hover:bg-slate-700 text-purple-300 border border-purple-500/20 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2"
             >
                 {isAiLoading ? <Sparkles className="w-4 h-4 animate-spin" /> : <Bot className="w-4 h-4" />}
-                Gemini Deep Scan
+                Gemini Audit
             </button>
 
             {/* Logs Console */}
@@ -514,7 +510,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                     <div className="flex justify-between items-start mb-2">
                         <h3 className="text-sm font-bold text-purple-300 flex items-center gap-2">
                             <Sparkles className="w-4 h-4" /> 
-                            {platform === 'cf' ? 'Cloudflare' : 'GCP'} Deep Intelligence
+                            {platform === 'cf' ? 'Cloudflare' : 'GCP'} Intelligence
                         </h3>
                         <span className="text-[10px] font-mono text-slate-400 border border-slate-700 px-2 py-0.5 rounded">
                             {aiAnalysis.riskLevel} Risk
@@ -524,7 +520,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                         {aiAnalysis.summary}
                     </p>
                     <div className="space-y-1">
-                        {aiAnalysis.findings.slice(0,5).map((f, i) => (
+                        {aiAnalysis.findings.slice(0,3).map((f, i) => (
                             <div key={i} className="flex gap-2 items-start">
                                 <span className="text-purple-500 text-[10px] mt-0.5">●</span>
                                 <span className="text-[11px] text-slate-400">{f.message}</span>
@@ -563,7 +559,7 @@ _dmarc.yoursite.com.\t1\tIN\tTXT\t"v=DMARC1; p=none; rua=mailto:DMARC_REPORT_EMA
                     <textarea 
                         value={outputContent}
                         readOnly
-                        placeholder="Configuration will appear here after 'Translate & Hardening' is run..."
+                        placeholder="Configuration will appear here..."
                         className={`w-full h-full bg-slate-900 p-4 font-mono text-xs resize-none focus:outline-none leading-relaxed
                             ${exportFormat === 'terraform' ? 'text-purple-300' : 'text-green-300'}
                         `}
