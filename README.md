@@ -42,4 +42,4 @@ git commit -m "Initial commit of Universal DNS Hub"
 git branch -M main
 git remote add origin YOUR_GITHUB_REPO_URL
 git push -u origin main
-'''
+```
